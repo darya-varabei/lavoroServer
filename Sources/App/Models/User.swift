@@ -7,3 +7,8 @@
 
 import Foundation
 import Fluent
+import Vapor
+
+final class User: Content, Model {
+    
+}
