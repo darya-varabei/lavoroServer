@@ -9,12 +9,12 @@ import Foundation
 import Fluent
 
 final class Employee: Model, Content {
-    static let schema = "Model"
+    static let schema = "employee"
     
     @ID(key: .id)
     var id: UUID?
     
-    @Parent(key: "user_id")
+    @Parent(key: "id")
     var user: User
     
     @Field(key: "name")
@@ -38,7 +38,10 @@ final class Employee: Model, Content {
     @Field(key: "interests")
     var interests: String
     
-    @Children(for: \.$id)
+    @Field(key: "photo")
+    var photo: Data
+    
+    @Children(for: \.$owner)
     var skills: [Skill]
     
     init() { }

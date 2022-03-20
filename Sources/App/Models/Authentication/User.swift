@@ -25,6 +25,9 @@ final class User: Model, Content {
     @Field(key: "login")
     var login: String
     
+    @Field(key: "role")
+    var role: String
+    
 //    @Children(for: \.$user)
 //    var user: UserLogin
     
@@ -60,7 +63,7 @@ struct JWTBearerAuthentificator: JWTAuthenticator {
                     request.auth.login(user)
                 }
         } catch {
-            return request.eventLoop.makeSucceededFuture()
+            return request.eventLoop.makeSucceededVoidFuture()
         }
     }
 }

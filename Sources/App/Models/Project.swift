@@ -10,12 +10,12 @@ import Fluent
 
 class Project: Model, Content {
    
-    static let schema = "Model"
+    static let schema = "project"
     
     @ID(key: .id)
     var id: UUID?
     
-    @Parent(key: "user_id")
+    @Parent(key: "id")
     var owner: User
     
     @Field(key: "name")
@@ -27,7 +27,10 @@ class Project: Model, Content {
     @Field(key: "descripttion")
     var description: String
     
-    @Children(for: \.$id)
+    @Field(key: "photo")
+    var photo: Data
+    
+    @Children(for: \.$project)
     var offers: [Offer]
     
     required init() {}

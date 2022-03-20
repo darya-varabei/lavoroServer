@@ -10,18 +10,18 @@ import Fluent
 
 final class Apply: Model, Content {
 
-    static let schema = "Model"
+    static let schema = "application"
     
     @ID(key: .id)
     var id: UUID?
     
-    @Parent(key: "sender_id")
+    @Parent(key: "id")
     var sender: User
     
-    @Parent(key: "reciever_id")
+    @Parent(key: "id")
     var reciever: User
     
-    @Parent(key: "offer_id")
+    @Parent(key: "id")
     var offer: Offer
     
     @Field(key: "description")

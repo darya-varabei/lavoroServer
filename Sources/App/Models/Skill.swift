@@ -9,12 +9,12 @@ import Foundation
 import Fluent
 
 final class Skill: Model, Content {
-    static let schema = "Model"
+    static let schema = "skill"
     
     @ID(key: .id)
     var id: UUID?
     
-    @Parent(key: "empoyee_id")
+    @Parent(key: "id")
     var owner: Employee
     
     @Field(key: "name")
