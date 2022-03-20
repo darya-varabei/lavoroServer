@@ -11,7 +11,7 @@ import Vapor
 import JWT
 
 final class User: Model, Content {
-    static let schema = "Model"
+    static let schema = "user"
     
     @ID(key: .id)
     var id: UUID?

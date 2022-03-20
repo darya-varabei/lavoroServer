@@ -16,7 +16,7 @@ struct CreateUser: Migration {
     }
     
     func prepare(on database: Database) -> EventLoopFuture<Void> {
-        return database.schema("lavoro")
+        return database.schema("user")
             .id()
             .field("login", .custom("character varying45)"), .required)
             .field("photo", .data)
