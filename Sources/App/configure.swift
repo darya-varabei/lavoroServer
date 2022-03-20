@@ -27,8 +27,8 @@ public func configure(_ app: Application) throws {
 
     app.databases.use(.postgres(hostname: "localhost", username: "dariavarabei", password: "admin123"), as: .psql)
     
-    app.migrations.add(CreateUserLogin())
     app.migrations.add(CreateUser())
+    //app.migrations.add(CreateUser())
     
     let privateKey = try String(contentsOfFile: app.directory.workingDirectory + "myjwt.key")
     let privateSigner = try JWTSigner.rs256(key: .private(pem: privateKey.bytes))

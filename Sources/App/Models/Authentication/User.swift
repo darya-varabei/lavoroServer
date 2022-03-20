@@ -10,24 +10,6 @@ import Fluent
 import Vapor
 import JWT
 
-//final class UserLogin: Model {
-//    typealias IDValue = Int
-//
-//    static let schema = "customers"
-//
-//    @ID(key: .id) var user_id: UUID?
-//    @Field(key: "email") var email: String
-//    @Field(key: "password") var password: String
-//
-//    init() { }
-//
-//    init(id: UUID? = nil, email: String, password: String) {
-//        self.user_id = id
-//        self.email = email
-//        self.password = password
-//    }
-//}
-
 final class User: Model, Content {
     static let schema = "Model"
     
@@ -39,6 +21,9 @@ final class User: Model, Content {
     
     @Field(key: "password")
     var password: String
+    
+    @Field(key: "login")
+    var login: String
     
 //    @Children(for: \.$user)
 //    var user: UserLogin

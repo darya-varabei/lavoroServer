@@ -28,11 +28,11 @@ struct UserController: RouteCollection {
         let username = user.email
         
         return User.query(on: req.db)
-            .filter(\.$username == username)
+            .filter(\.$email == username)
             .first()
             .unwrap(or: Abort(.notFound))
             .map { usr in
-                return Me(id: UUID(), username: user.username)
+                return Me(id: UUID(), email: user.email)
             }
     }
     

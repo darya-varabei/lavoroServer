@@ -7,3 +7,26 @@
 
 import Foundation
 import Fluent
+
+final class Skill: Model, Content {
+    static let schema = "Model"
+    
+    @ID(key: .id)
+    var id: UUID?
+    
+    @Parent(key: "empoyee_id")
+    var owner: Employee
+    
+    @Field(key: "name")
+    var name: String
+    
+    @Field(key: "level")
+    var level: String
+    
+    init(id: UUID? = nil, name: String, level: String) {
+        self.id = id
+        self.name  = name
+        self.level = level
+    }
+    init() {}
+}
