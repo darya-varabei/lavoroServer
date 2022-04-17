@@ -6,23 +6,20 @@
 //
 
 import Foundation
-import Vapor
 import Fluent
-import SQLKit
 
-struct CreateProject: Migration {
+struct CreateOffer: Migration {
     func revert(on database: Database) -> EventLoopFuture<Void> {
         return database.schema("lavoro").delete()
     }
     
     func prepare(on database: Database) -> EventLoopFuture<Void> {
-        return database.schema("project")
+        return database.schema("offer")
             .id()
-            .field("owner", .uuid, .required)
+            .field("project", .uuid, .required)
             .field("name", .string, .required)
             .field("location", .string, .required)
             .field("description", .string)
-            .field("photo", .string)
             .create()
     }
 }

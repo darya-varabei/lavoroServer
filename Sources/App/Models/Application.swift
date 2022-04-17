@@ -7,6 +7,7 @@
 
 import Foundation
 import Fluent
+import Vapor
 
 final class Apply: Model, Content {
 
@@ -35,5 +36,5 @@ final class Apply: Model, Content {
         self.description = description
     }
     
-    init() {}
+    required init() {}
 }

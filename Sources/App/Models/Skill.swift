@@ -7,6 +7,7 @@
 
 import Foundation
 import Fluent
+import Vapor
 
 final class Skill: Model, Content {
     static let schema = "skill"
@@ -28,5 +29,6 @@ final class Skill: Model, Content {
         self.name  = name
         self.level = level
     }
-    init() {}
+    
+    required init() {}
 }

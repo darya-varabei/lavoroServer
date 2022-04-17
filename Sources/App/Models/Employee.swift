@@ -7,6 +7,7 @@
 
 import Foundation
 import Fluent
+import Vapor
 
 final class Employee: Model, Content {
     static let schema = "employee"
@@ -44,7 +45,7 @@ final class Employee: Model, Content {
     @Children(for: \.$owner)
     var skills: [Skill]
     
-    init() { }
+    required init() {}
     
     init(id: UUID? = nil, name: String, surname: String, age: Int, location: String, description: String, relocate: Bool, interests: String) {
         self.id = id

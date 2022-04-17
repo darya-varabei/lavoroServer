@@ -7,6 +7,7 @@
 
 import Foundation
 import Fluent
+import Vapor
 
 final class Technology: Model, Content {
 
@@ -30,5 +31,5 @@ final class Technology: Model, Content {
         self.level = level
     }
     
-    init() {}
+    required init() {}
 }

@@ -7,6 +7,7 @@
 
 import Foundation
 import Fluent
+import Vapor
 
 final class Offer: Model, Content {
   
@@ -30,7 +31,7 @@ final class Offer: Model, Content {
     @Children(for: \.$offer_id)
     var technologies: [Technology]
     
-    init() {}
+    required init() {}
     
     init(id: UUID, name: String, location: String, description: String, technologies: [Technology]) {
         self.id = id

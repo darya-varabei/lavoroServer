@@ -18,9 +18,10 @@ struct CreateApplication: Migration {
     func prepare(on database: Database) -> EventLoopFuture<Void> {
         return database.schema("application")
             .id()
-            .field("sender", UUID(), .required)
-            .field("reciever", UUID(), .required)
-            .field("offer", UUID(), .required)
-            .field("description", .string, .required)
+            .field("sender", .uuid, .required)
+            .field("reciever", .uuid, .required)
+            .field("offer", .uuid, .required)
+            .field("description", .string)
+            .create()
     }
 }

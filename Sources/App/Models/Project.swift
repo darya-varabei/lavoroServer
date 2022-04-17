@@ -7,8 +7,9 @@
 
 import Foundation
 import Fluent
+import Vapor
 
-class Project: Model, Content {
+final class Project: Model, Content {
    
     static let schema = "project"
     

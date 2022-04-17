@@ -7,25 +7,26 @@
 
 import Foundation
 import Fluent
+import Vapor
 
 final class Response: Model, Content {
 
-    static let schema = "application"
+    static let schema = "response"
     
     @ID(key: .id)
     var id: UUID?
     
     @Parent(key: "id")
-    var application: Application
+    var application: Apply
     
     @Field(key: "description")
     var description: String
     
-    init(id: UUID, application: Application, description: String) {
+    init(id: UUID, application: Apply, description: String) {
         self.id = id
         self.application = application
         self.description = description
     }
     
-    init() {}
+    required init() {}
 }

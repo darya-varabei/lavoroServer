@@ -2,7 +2,7 @@
 //  File.swift
 //  
 //
-//  Created by Дарья Воробей on 12.03.22.
+//  Created by Дарья Воробей on 17.04.22.
 //
 
 import Foundation
@@ -10,16 +10,17 @@ import Vapor
 import Fluent
 import SQLKit
 
-struct CreateUser: Migration {
+struct CreateSkill: Migration {
     func revert(on database: Database) -> EventLoopFuture<Void> {
         return database.schema("lavoro").delete()
     }
     
     func prepare(on database: Database) -> EventLoopFuture<Void> {
-        return database.schema("user")
+        return database.schema("skill")
             .id()
-            .field("login", .custom("character varying45)"), .required)
-            .field("photo", .data)
+            .field("name", .string, .required)
+            .field("owner", .uuid)
+            .field("level", .string)
             .create()
     }
 }
