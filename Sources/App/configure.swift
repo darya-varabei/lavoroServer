@@ -24,11 +24,22 @@ public func configure(_ app: Application) throws {
 //        password: Environment.get("DATABASE_PASSWORD") ?? "vapor_password",
 //        database: Environment.get("DATABASE_NAME") ?? "vapor_database"
 //    ), as: .psql)
-
+    // configure.swift
+    app.repositories.register(.application) { req in
+        
+        FluentApplicationRepository(req)
+        
+    }
     app.databases.use(.postgres(hostname: "localhost", username: "dariavarabei", password: "admin123"), as: .psql)
     
     app.migrations.add(CreateUser())
-    //app.migrations.add(CreateUser())
+    app.migrations.add(CreateApplication())
+    app.migrations.add(CreateEmployee())
+    app.migrations.add(CreateOffer())
+    app.migrations.add(CreateProject())
+    app.migrations.add(CreateResponse())
+    app.migrations.add(CreateSkill())
+    app.migrations.add(CreateTechnology())
     
     let privateKey = try String(contentsOfFile: app.directory.workingDirectory + "myjwt.key")
     let privateSigner = try JWTSigner.rs256(key: .private(pem: privateKey.bytes))
