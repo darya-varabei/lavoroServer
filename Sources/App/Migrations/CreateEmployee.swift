@@ -25,7 +25,7 @@ struct CreateEmployee: Migration {
             .field("location", .string, .required)
             .field("description", .string)
             .field("relocate", .bool)
-            .field("name", .string)
+            .field("interests", .string)
             .create()
     }
 }

@@ -56,7 +56,7 @@ struct UserController: RouteCollection {
     
     func get(req: Request) throws -> EventLoopFuture<User> {
         return User.query(on: req.db)
-            .filter(\.$email == req.parameters.get("email" ?? "NA")!)
+            .filter(\.$email == req.parameters.get("email")!)
             .first()
             .unwrap(or: Abort(.notFound))
     }
