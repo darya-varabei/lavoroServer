@@ -19,9 +19,9 @@ public func configure(_ app: Application) throws {
         hostname: Environment.get("PG_HOST") ?? "localhost",
         username: Environment.get("PG_USERNAME") ?? "dariavarabei",
         password: Environment.get("PG_PASSWORD") ?? "admin123",
-        database: Environment.get("PG_DATABASE") ?? "lavoro"
+        database: Environment.get("PG_DATABASE") ?? "iolavoro"
     ), as: .psql)
-    // configure.swift
+    
     app.repositories.register(.application) { req in
         
         FluentApplicationRepository(req)
@@ -30,11 +30,11 @@ public func configure(_ app: Application) throws {
     //app.databases.use(.postgres(hostname: "localhost", username: "dariavarabei", password: "admin123"), as: .psql)
     
     app.migrations.add(CreateUser())
-    app.migrations.add(CreateApplication())
+//    app.migrations.add(CreateApplication())
+    app.migrations.add(CreateProject())
     app.migrations.add(CreateEmployee())
     app.migrations.add(CreateOffer())
-    app.migrations.add(CreateProject())
-    app.migrations.add(CreateResponse())
+//    app.migrations.add(CreateResponse())
     app.migrations.add(CreateSkill())
     app.migrations.add(CreateTechnology())
     
@@ -46,6 +46,6 @@ public func configure(_ app: Application) throws {
    
     app.jwt.signers.use(privateSigner, kid: .private)
     app.jwt.signers.use(publicSigner, kid: .public, isDefault: true)
-    // register routes
+   
     try routes(app)
 }

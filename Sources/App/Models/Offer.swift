@@ -16,7 +16,7 @@ final class Offer: Model, Content {
     @ID(key: .id)
     var id: UUID?
     
-    @Parent(key: "project_id")
+    @Parent(key: .id)
     var project: Project
     
     @Field(key: "name")

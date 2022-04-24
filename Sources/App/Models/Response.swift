@@ -16,7 +16,7 @@ final class Response: Model, Content {
     @ID(key: .id)
     var id: UUID?
     
-    @Parent(key: "id")
+    @Parent(key: .id)
     var application: Apply
     
     @Field(key: "description")

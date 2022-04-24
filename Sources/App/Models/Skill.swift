@@ -15,7 +15,7 @@ final class Skill: Model, Content {
     @ID(key: .id)
     var id: UUID?
     
-    @Parent(key: "id")
+    @Parent(key: .id)
     var owner: Employee
     
     @Field(key: "name")
@@ -24,10 +24,11 @@ final class Skill: Model, Content {
     @Field(key: "level")
     var level: String
     
-    init(id: UUID? = nil, name: String, level: String) {
+    init(id: UUID? = nil, name: String, level: String, ownerId: UUID) {
         self.id = id
         self.name  = name
         self.level = level
+        self.$owner.id = ownerId
     }
     
     required init() {}

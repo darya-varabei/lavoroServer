@@ -12,13 +12,14 @@ import SQLKit
 
 struct CreateEmployee: Migration {
     func revert(on database: Database) -> EventLoopFuture<Void> {
-        return database.schema("lavoro").delete()
+        return database.schema("iolavoro").delete()
     }
     
     func prepare(on database: Database) -> EventLoopFuture<Void> {
         return database.schema("employee")
             .id()
-            .field("userId", .uuid, .required)
+            .field("user_id", .uuid, .required)
+            .foreignKey("user_id", references: User.schema, .id, onDelete: .cascade, onUpdate: .noAction)
             .field("name", .string, .required)
             .field("surname", .string, .required)
             .field("age", .int, .required)

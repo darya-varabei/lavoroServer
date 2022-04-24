@@ -15,7 +15,7 @@ final class Employee: Model, Content {
     @ID(key: .id)
     var id: UUID?
     
-    @Parent(key: "id")
+    @Parent(key: .id)
     var user: User
     
     @Field(key: "name")
@@ -47,7 +47,7 @@ final class Employee: Model, Content {
     
     required init() {}
     
-    init(id: UUID? = nil, name: String, surname: String, age: Int, location: String, description: String, relocate: Bool, interests: String) {
+    init(id: UUID? = nil, name: String, surname: String, age: Int, location: String, description: String, relocate: Bool, interests: String, user: UUID) {
         self.id = id
         self.name = name
         self.surname = surname
@@ -56,5 +56,6 @@ final class Employee: Model, Content {
         self.description = description
         self.relocate = relocate
         self.interests = interests
+        self.$user.id = user
     }
 }

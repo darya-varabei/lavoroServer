@@ -12,13 +12,14 @@ import SQLKit
 
 struct CreateTechnology: Migration {
     func revert(on database: Database) -> EventLoopFuture<Void> {
-        return database.schema("lavoro").delete()
+        return database.schema("iolavoro").delete()
     }
     
     func prepare(on database: Database) -> EventLoopFuture<Void> {
         return database.schema("technology")
             .id()
-            .field("offer_id", .uuid, .required)
+            .field("owner", .uuid, .required)
+            .foreignKey("owner", references: Offer.schema, .id)
             .field("name", .string)
             .field("level", .string)
             .create()

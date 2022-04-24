@@ -16,8 +16,8 @@ final class Project: Model, Content {
     @ID(key: .id)
     var id: UUID?
     
-    @Parent(key: "id")
-    var owner: User
+    @Parent(key: .id)
+    var user: User
     
     @Field(key: "name")
     var name: String
@@ -36,12 +36,12 @@ final class Project: Model, Content {
     
     required init() {}
     
-    init(project_id: UUID, owner: User, name: String, location: String, description: String, offers: [Offer]) {
+    init(project_id: UUID, owner: User, name: String, location: String, description: String, offers: [Offer], user: UUID) {
         self.id = project_id
-        self.owner = owner
         self.name = name
         self.location = location
         self.description = description
         self.offers = offers
+        self.$user.id = user
     }
 }

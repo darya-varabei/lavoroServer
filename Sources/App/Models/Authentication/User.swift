@@ -16,9 +16,6 @@ final class User: Model, Content {
     @ID(key: .id)
     var id: UUID?
     
-    @Field(key: "email")
-    var email: String
-    
     @Field(key: "password")
     var password: String
     
@@ -28,25 +25,23 @@ final class User: Model, Content {
     @Field(key: "role")
     var role: String
     
-//    @Children(for: \.$user)
-//    var user: UserLogin
-    
     init() { }
     
-    init(id: UUID? = nil, email: String, password: String) {
+    init(id: UUID? = nil, login: String, password: String, role: String) {
         self.id = id
-        self.email = email
+        self.login = login
+        self.role = role
         self.password = password
     }
 }
 
 extension User: ModelAuthenticatable {
     
-    static var usernameKey: KeyPath<User, Field<String>> = \User.$email
+    static var usernameKey: KeyPath<User, Field<String>> = \User.$login
     static var passwordHashKey: KeyPath<User, Field<String>> = \User.$password
     
     func verify(password: String) throws -> Bool {
-        return try Bcrypt.verify(password, created: self.password)
+        return password == self.password
     }
 }
 
@@ -60,7 +55,7 @@ struct JWTBearerAuthentificator: JWTAuthenticator {
                 .find(jwt.id, on: request.db)
                 .unwrap(or: Abort(.notFound))
                 .map { user in
-                    request.auth.login(user)
+                    request.auth.login(user)//.log(user)
                 }
         } catch {
             return request.eventLoop.makeSucceededVoidFuture()
@@ -75,6 +70,6 @@ extension User {
         
         let exp = ExpirationClaim(value: expDate)
         
-        return try app.jwt.signers.get(kid: .private)!.sign(MyJwtPayload(id: self.id, username: self.email, exp: exp))
+        return try app.jwt.signers.get(kid: .private)!.sign(MyJwtPayload(id: self.id, username: self.login, exp: exp))
     }
 }

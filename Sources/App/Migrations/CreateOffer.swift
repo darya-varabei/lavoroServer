@@ -16,7 +16,8 @@ struct CreateOffer: Migration {
     func prepare(on database: Database) -> EventLoopFuture<Void> {
         return database.schema("offer")
             .id()
-            .field("project", .uuid, .required)
+            .field("owner", .uuid, .required)
+            .foreignKey("owner", references: Project.schema, .id)
             .field("name", .string, .required)
             .field("location", .string, .required)
             .field("description", .string)

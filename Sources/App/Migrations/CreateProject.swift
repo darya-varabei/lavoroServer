@@ -12,17 +12,18 @@ import SQLKit
 
 struct CreateProject: Migration {
     func revert(on database: Database) -> EventLoopFuture<Void> {
-        return database.schema("lavoro").delete()
+        return database.schema("iolavoro").delete()
     }
     
     func prepare(on database: Database) -> EventLoopFuture<Void> {
         return database.schema("project")
             .id()
-            .field("owner", .uuid, .required)
+            .field("user_id", .uuid, .required)
+            .foreignKey("user_id", references: User.schema, .id, onDelete: .cascade, onUpdate: .noAction)
             .field("name", .string, .required)
             .field("location", .string, .required)
             .field("description", .string)
-            .field("photo", .string)
+            .field("photo", .data)
             .create()
     }
 }

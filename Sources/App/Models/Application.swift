@@ -9,6 +9,14 @@ import Foundation
 import Fluent
 import Vapor
 
+extension FieldKey {
+    static var sender: Self { "sender" }
+    static var reciever: Self { "reciever" }
+    static var offer: Self { "offer" }
+    static var description: Self { "description" }
+}
+
+
 final class Apply: Model, Content {
 
     static let schema = "application"
@@ -16,24 +24,24 @@ final class Apply: Model, Content {
     @ID(key: .id)
     var id: UUID?
     
-    @Parent(key: "id")
+    @Parent(key: .sender)
     var sender: User
     
-    @Parent(key: "id")
-    var reciever: User
+    @Field(key: "reciever")
+    var reciever: UUID
     
-    @Parent(key: "id")
+    @Parent(key: .offer)
     var offer: Offer
     
     @Field(key: "description")
     var description: String
     
-    init(id: UUID, sender: User, reciever: User, offer: Offer, description: String) {
+    init(id: UUID, sender: User, reciever: UUID, offer: Offer, description: String, senderId: UUID) {
         self.id = id
-        self.sender = sender
         self.reciever = reciever
         self.offer = offer
         self.description = description
+        self.$sender.id = senderId
     }
     
     required init() {}

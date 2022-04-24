@@ -19,7 +19,8 @@ struct CreateSkill: Migration {
         return database.schema("skill")
             .id()
             .field("name", .string, .required)
-            .field("owner", .uuid)
+            .field("owner", .uuid, .required)
+            .foreignKey("owner", references: Employee.schema, .id)
             .field("level", .string)
             .create()
     }

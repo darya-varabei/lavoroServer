@@ -9,6 +9,6 @@ import Foundation
 import Vapor
 
 final class UserLogin: Content {
-    var username: String
+    var login: String
     var password: String
 }

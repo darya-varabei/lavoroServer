@@ -16,7 +16,7 @@ final class Technology: Model, Content {
     @ID(key: .id)
     var id: UUID?
     
-    @Parent(key: "id")
+    @Parent(key: .id)
     var offer_id: Offer
     
     @Field(key: "name")
@@ -25,10 +25,11 @@ final class Technology: Model, Content {
     @Field(key: "level")
     var level: String
     
-    init(id: UUID? = nil, name: String, level: String, offer_id: Offer) {
+    init(id: UUID? = nil, name: String, level: String, offer_id: Offer, ownerId: UUID) {
         self.id = id
         self.name  = name
         self.level = level
+        self.$offer_id.id = ownerId
     }
     
     required init() {}

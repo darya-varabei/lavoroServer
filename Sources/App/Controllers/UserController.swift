@@ -14,7 +14,12 @@ struct UserController: RouteCollection {
         let users = routes.grouped("users")
         
         users.group("login") { user in
+            print("login")
             user.post(use: login)
+        }
+        users.group("register") { user in
+            print("register")
+            user.post(use: create)
         }
         users
             .grouped(JWTBearerAuthentificator())
@@ -25,22 +30,21 @@ struct UserController: RouteCollection {
     
     func me(req: Request) throws -> EventLoopFuture<Me> {
         let user = try req.auth.require(User.self)
-        let username = user.email
+        let username = user.login
         
         return User.query(on: req.db)
-            .filter(\.$email == username)
+            .filter(\.$login == username)
             .first()
             .unwrap(or: Abort(.notFound))
             .map { usr in
-                return Me(id: UUID(), email: user.email)
+                return Me(id: UUID(), email: user.login)
             }
     }
     
     func login(req: Request) throws -> EventLoopFuture<String> {
         let userToLogin = try req.content.decode(UserLogin.self)
-        
         return User.query(on: req.db)
-            .filter(\.$email == userToLogin.username)
+            .filter(\.$login == userToLogin.login)
             .first()
             .unwrap(or: Abort(.notFound))
             .flatMapThrowing { dbUser in
@@ -54,9 +58,15 @@ struct UserController: RouteCollection {
             }
     }
     
+//    func register(req: Request) throws -> EventLoopFuture<String> {
+//        let userToLogin = try req.content.decode(UserLogin.self)
+//        try create(req: req)
+//        try login(req: req)
+//    }
+    
     func get(req: Request) throws -> EventLoopFuture<User> {
         return User.query(on: req.db)
-            .filter(\.$email == req.parameters.get("email")!)
+            .filter(\.$login == req.parameters.get("login")!)
             .first()
             .unwrap(or: Abort(.notFound))
     }
