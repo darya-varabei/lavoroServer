@@ -18,7 +18,8 @@ struct CreateResponse: Migration {
     func prepare(on database: Database) -> EventLoopFuture<Void> {
         return database.schema("response")
             .id()
-            .foreignKey(.id, references: Apply.schema, .id)
+            .field("apply", .uuid, .required)
+            .foreignKey("apply", references: Apply.schema, .id)
             .field("description", .string, .required)
             .create()
     }

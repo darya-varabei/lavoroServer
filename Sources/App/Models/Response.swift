@@ -22,10 +22,10 @@ final class Response: Model, Content {
     @Field(key: "description")
     var description: String
     
-    init(id: UUID, application: Apply, description: String) {
+    init(id: UUID, application: Apply, description: String, applicationId: UUID) {
         self.id = id
-        self.application = application
         self.description = description
+        self.$application.id = applicationId
     }
     
     required init() {}

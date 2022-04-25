@@ -30,11 +30,11 @@ public func configure(_ app: Application) throws {
     //app.databases.use(.postgres(hostname: "localhost", username: "dariavarabei", password: "admin123"), as: .psql)
     
     app.migrations.add(CreateUser())
-//    app.migrations.add(CreateApplication())
+    app.migrations.add(CreateApplication())
     app.migrations.add(CreateProject())
     app.migrations.add(CreateEmployee())
     app.migrations.add(CreateOffer())
-//    app.migrations.add(CreateResponse())
+    app.migrations.add(CreateResponse())
     app.migrations.add(CreateSkill())
     app.migrations.add(CreateTechnology())
     

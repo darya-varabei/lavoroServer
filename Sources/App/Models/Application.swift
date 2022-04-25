@@ -19,7 +19,7 @@ extension FieldKey {
 
 final class Apply: Model, Content {
 
-    static let schema = "application"
+    static let schema = "apply"
     
     @ID(key: .id)
     var id: UUID?
