@@ -63,12 +63,26 @@ struct FluentApplicationRepository: ApplicationRepository {
 struct ApplicationController: RouteCollection {
     
     func boot(routes: RoutesBuilder) throws {
-        let application = routes.grouped("application")
-        application.get(use: index)
-        application.post(use: create)
-        application.group(":applicationID") { todo in
-            todo.delete(use: delete)
+        let applications = routes.grouped("application")
+        
+        applications.group("view") { user in
+            user.post(use: index)
         }
+        
+        applications.group("create") { user in
+            user.post(use: create)
+        }
+        users
+            .grouped(JWTBearerAuthentificator())
+            .group("me") { usr in
+                usr.get(use: me)
+            }
+//        let application = routes.grouped("application")
+//        application.get(use: index)
+//        application.post(use: create)
+//        application.group(":applicationID") { todo in
+//            todo.delete(use: delete)
+//        }
     }
     
     func index(req: Request) async throws -> [Apply] {

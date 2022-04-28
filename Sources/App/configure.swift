@@ -23,10 +23,32 @@ public func configure(_ app: Application) throws {
     ), as: .psql)
     
     app.repositories.register(.application) { req in
-        
         FluentApplicationRepository(req)
-        
     }
+    app.repositories.register(.offer) { req in
+        OfferRepositoryImpl(req)
+    }
+
+    app.repositories.register(.project) { req in
+        ProjectRepositoryImpl(req)
+    }
+
+    app.repositories.register(.employee) { req in
+        EmployeeRepositoryImpl(req)
+    }
+   
+    app.repositories.register(.skill) { req in
+        SkillRepositoryImpl(req)
+    }
+
+    app.repositories.register(.technology) { req in
+        TechnologyRepositoryImpl(req)
+    }
+
+    app.repositories.register(.response) { req in
+        ResponseRepositoryImpl(req)
+    }
+
     //app.databases.use(.postgres(hostname: "localhost", username: "dariavarabei", password: "admin123"), as: .psql)
     
     app.migrations.add(CreateUser())
