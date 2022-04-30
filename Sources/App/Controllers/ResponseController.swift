@@ -64,25 +64,15 @@ struct ResponseController: RouteCollection {
     
     func boot(routes: RoutesBuilder) throws {
         let responses = routes.grouped("response")
+            //.grouped(JWTBearerAuthentificator)
         
-        responses.group("view") { user in
+        responses.group("list") { user in
             user.post(use: index)
         }
         
         responses.group("create") { user in
             user.post(use: create)
         }
-        responses
-            .grouped(JWTBearerAuthentificator())
-            .group("me") { usr in
-                usr.get(use: me)
-            }
-//        let application = routes.grouped("application")
-//        application.get(use: index)
-//        application.post(use: create)
-//        application.group(":applicationID") { todo in
-//            todo.delete(use: delete)
-//        }
     }
     
     func index(req: Request) async throws -> [Response] {
@@ -95,7 +85,7 @@ struct ResponseController: RouteCollection {
     }
     
     func delete(req: Request) async throws -> HTTPStatus {
-        guard let id = req.parameters.get("applicationID", as: Response.IDValue.self) else {
+        guard let id = req.parameters.get("id", as: Response.IDValue.self) else {
             throw Abort(.notFound)
         }
         try await req.repositories.response.delete(id)

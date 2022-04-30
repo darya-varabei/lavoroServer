@@ -8,6 +8,7 @@
 import Foundation
 import Vapor
 import Fluent
+import JWT
 
 struct TechnologyRepositoryImpl: TechnologyRepository {
     var req: Request
@@ -63,26 +64,15 @@ struct TechnologyRepositoryImpl: TechnologyRepository {
 struct TechnologyController: RouteCollection {
     
     func boot(routes: RoutesBuilder) throws {
-        let technology = routes.grouped("technology")
+        let technology = routes.grouped("technology")//.grouped(JWTBearerAuthentificator) 
         
-        technology.group("view") { user in
+        technology.group("list") { user in
             user.post(use: index)
         }
         
         technology.group("create") { user in
             user.post(use: create)
         }
-        technology
-            .grouped(JWTBearerAuthentificator())
-            .group("me") { usr in
-                usr.get(use: me)
-            }
-//        let application = routes.grouped("application")
-//        application.get(use: index)
-//        application.post(use: create)
-//        application.group(":applicationID") { todo in
-//            todo.delete(use: delete)
-//        }
     }
     
     func index(req: Request) async throws -> [Technology] {
@@ -95,7 +85,7 @@ struct TechnologyController: RouteCollection {
     }
     
     func delete(req: Request) async throws -> HTTPStatus {
-        guard let id = req.parameters.get("applicationID", as: Technology.IDValue.self) else {
+        guard let id = req.parameters.get("id", as: Technology.IDValue.self) else {
             throw Abort(.notFound)
         }
         try await req.repositories.technology.delete(id)

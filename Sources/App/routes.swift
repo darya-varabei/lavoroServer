@@ -11,4 +11,11 @@ func routes(_ app: Application) throws {
     }
 
     try app.register(collection: UserController())
+    try app.register(collection: ApplicationController())
+    try app.register(collection: EmployeeController())
+    try app.register(collection: ProjectController())
+    try app.register(collection: SkillController())
+    try app.register(collection: TechnologyController())
+    try app.register(collection: ResponseController())
+    
 }

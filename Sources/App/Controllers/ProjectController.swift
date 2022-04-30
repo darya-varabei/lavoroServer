@@ -24,7 +24,7 @@ struct ProjectRepositoryImpl: ProjectRepository {
         query().filter(\.$id == id)
     }
 
-    func query(_ ids: [Project.IDValue]) -> QueryBuilder<Project> {
+    func query(_ ids: [User.IDValue]) -> QueryBuilder<Project> {
         query().filter(\.$id ~~ ids)
     }
 
@@ -64,25 +64,15 @@ struct ProjectController: RouteCollection {
     
     func boot(routes: RoutesBuilder) throws {
         let project = routes.grouped("project")
+          //  .grouped(JWTBearerAuthentificator)
         
-        project.group("view") { user in
-            user.post(use: index)
+        project.group("list") { user in
+            user.get(use: index)
         }
         
         project.group("create") { user in
             user.post(use: create)
         }
-        project
-            .grouped(JWTBearerAuthentificator())
-            .group("me") { usr in
-                usr.get(use: me)
-            }
-//        let application = routes.grouped("application")
-//        application.get(use: index)
-//        application.post(use: create)
-//        application.group(":applicationID") { todo in
-//            todo.delete(use: delete)
-//        }
     }
     
     func index(req: Request) async throws -> [Project] {
@@ -95,7 +85,7 @@ struct ProjectController: RouteCollection {
     }
     
     func delete(req: Request) async throws -> HTTPStatus {
-        guard let id = req.parameters.get("applicationID", as: Project.IDValue.self) else {
+        guard let id = req.parameters.get("id", as: Project.IDValue.self) else {
             throw Abort(.notFound)
         }
         try await req.repositories.project.delete(id)

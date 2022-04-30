@@ -25,11 +25,11 @@ final class Project: Model, Content {
     @Field(key: "location")
     var location: String
     
-    @Field(key: "descripttion")
+    @Field(key: "description")
     var description: String
     
     @Field(key: "photo")
-    var photo: Data
+    var photo: Data?
     
     @Children(for: \.$project)
     var offers: [Offer]

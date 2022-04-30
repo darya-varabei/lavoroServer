@@ -63,26 +63,15 @@ struct SkillRepositoryImpl: SkillRepository {
 struct SkillController: RouteCollection {
     
     func boot(routes: RoutesBuilder) throws {
-        let skill = routes.grouped("skill")
+        let skill = routes.grouped("skill")//.grouped(JWTBearerAuthentificator)
         
-        skill.group("view") { user in
+        skill.group("list") { user in
             user.post(use: index)
         }
         
         skill.group("create") { user in
             user.post(use: create)
         }
-        skill
-            .grouped(JWTBearerAuthentificator())
-            .group("me") { usr in
-                usr.get(use: me)
-            }
-//        let application = routes.grouped("application")
-//        application.get(use: index)
-//        application.post(use: create)
-//        application.group(":applicationID") { todo in
-//            todo.delete(use: delete)
-//        }
     }
     
     func index(req: Request) async throws -> [Skill] {
@@ -95,7 +84,7 @@ struct SkillController: RouteCollection {
     }
     
     func delete(req: Request) async throws -> HTTPStatus {
-        guard let id = req.parameters.get("applicationID", as: Skill.IDValue.self) else {
+        guard let id = req.parameters.get("id", as: Skill.IDValue.self) else {
             throw Abort(.notFound)
         }
         try await req.repositories.skill.delete(id)

@@ -64,6 +64,7 @@ struct ApplicationController: RouteCollection {
     
     func boot(routes: RoutesBuilder) throws {
         let applications = routes.grouped("application")
+           // .grouped(JWTBearerAuthentificator)
         
         applications.group("view") { user in
             user.post(use: index)
@@ -72,20 +73,10 @@ struct ApplicationController: RouteCollection {
         applications.group("create") { user in
             user.post(use: create)
         }
-        users
-            .grouped(JWTBearerAuthentificator())
-            .group("me") { usr in
-                usr.get(use: me)
-            }
-//        let application = routes.grouped("application")
-//        application.get(use: index)
-//        application.post(use: create)
-//        application.group(":applicationID") { todo in
-//            todo.delete(use: delete)
-//        }
     }
     
     func index(req: Request) async throws -> [Apply] {
+       // let user = try req.auth.require(User.self)
         try await req.repositories.application.list()
     }
     
@@ -95,7 +86,7 @@ struct ApplicationController: RouteCollection {
     }
     
     func delete(req: Request) async throws -> HTTPStatus {
-        guard let id = req.parameters.get("applicationID", as: Apply.IDValue.self) else {
+        guard let id = req.parameters.get("id", as: Apply.IDValue.self) else {
             throw Abort(.notFound)
         }
         try await req.repositories.application.delete(id)

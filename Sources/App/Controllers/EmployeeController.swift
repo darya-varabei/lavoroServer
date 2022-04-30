@@ -64,25 +64,15 @@ struct EmployeeController: RouteCollection {
     
     func boot(routes: RoutesBuilder) throws {
         let employee = routes.grouped("employee")
+           // .grouped(JWTBearerAuthentificator)
         
-        employee.group("view") { user in
-            user.post(use: index)
+        employee.group("list") { user in
+            user.get(use: index)
         }
         
         employee.group("create") { user in
             user.post(use: create)
         }
-        users
-            .grouped(JWTBearerAuthentificator())
-            .group("me") { usr in
-                usr.get(use: me)
-            }
-//        let application = routes.grouped("application")
-//        application.get(use: index)
-//        application.post(use: create)
-//        application.group(":applicationID") { todo in
-//            todo.delete(use: delete)
-//        }
     }
     
     func index(req: Request) async throws -> [Employee] {
@@ -95,7 +85,7 @@ struct EmployeeController: RouteCollection {
     }
     
     func delete(req: Request) async throws -> HTTPStatus {
-        guard let id = req.parameters.get("applicationID", as: Employee.IDValue.self) else {
+        guard let id = req.parameters.get("id", as: Employee.IDValue.self) else {
             throw Abort(.notFound)
         }
         try await req.repositories.employee.delete(id)
