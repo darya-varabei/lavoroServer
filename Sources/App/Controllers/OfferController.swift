@@ -66,7 +66,7 @@ struct OfferController: RouteCollection {
         let offer = routes.grouped("offer")//.grouped(JWTBearerAuthentificator)
         
         offer.group("list") { user in
-            user.post(use: index)
+            user.get(use: index)
         }
         
         offer.group("create") { user in

@@ -66,16 +66,27 @@ struct SkillController: RouteCollection {
         let skill = routes.grouped("skill")//.grouped(JWTBearerAuthentificator)
         
         skill.group("list") { user in
-            user.post(use: index)
+            user.get(use: index)
         }
         
         skill.group("create") { user in
             user.post(use: create)
         }
+        
+        skill.group("user") { user in
+            user.get(use: find)
+        }
     }
     
     func index(req: Request) async throws -> [Skill] {
         try await req.repositories.skill.list()
+    }
+    
+    func find(req: Request) async throws -> [Skill] {
+        //let userId = req.parameters.get(":id")
+        let userId = try? req.query.get(UUID.self, at: "id")
+        print(userId)
+        return try await req.repositories.skill.list()//.filter { $0.$owner.$id. == userId }//{ String(describing: $0.$owner.$id) == userId }
     }
     
     func create(req: Request) async throws -> Skill {

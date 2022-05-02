@@ -67,7 +67,7 @@ struct ResponseController: RouteCollection {
             //.grouped(JWTBearerAuthentificator)
         
         responses.group("list") { user in
-            user.post(use: index)
+            user.get(use: index)
         }
         
         responses.group("create") { user in

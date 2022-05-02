@@ -67,7 +67,7 @@ struct TechnologyController: RouteCollection {
         let technology = routes.grouped("technology")//.grouped(JWTBearerAuthentificator) 
         
         technology.group("list") { user in
-            user.post(use: index)
+            user.get(use: index)
         }
         
         technology.group("create") { user in

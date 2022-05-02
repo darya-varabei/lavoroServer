@@ -41,7 +41,7 @@ struct UserController: RouteCollection {
             }
     }
     
-    func login(req: Request) throws -> EventLoopFuture<String> {
+    func login(req: Request) throws -> EventLoopFuture<CurrentUser> {
         let userToLogin = try req.content.decode(UserLogin.self)
         return User.query(on: req.db)
             .filter(\.$login == userToLogin.login)
@@ -54,15 +54,12 @@ struct UserController: RouteCollection {
                 }
                 req.auth.login(dbUser)
                 let user = try req.auth.require(User.self)
-                return try user.generateToken(req.application)
+                let token = try user.generateToken(req.application)
+                
+                let currentUser = CurrentUser(id: user.id!, role: user.role, token: token)
+                return currentUser
             }
     }
-    
-//    func register(req: Request) throws -> EventLoopFuture<String> {
-//        let userToLogin = try req.content.decode(UserLogin.self)
-//        try create(req: req)
-//        try login(req: req)
-//    }
     
     func get(req: Request) throws -> EventLoopFuture<User> {
         return User.query(on: req.db)

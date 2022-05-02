@@ -30,6 +30,12 @@ final class Employee: Model, Content {
     @Field(key: "location")
     var location: String
     
+    @Field(key: "salary")
+    var salary: String
+    
+    @Field(key: "mode")
+    var mode: String
+    
     @Field(key: "description")
     var description: String
     
@@ -39,8 +45,11 @@ final class Employee: Model, Content {
     @Field(key: "interests")
     var interests: String
     
-    @Field(key: "photo")
-    var photo: Data
+    @Field(key: "specialization")
+    var specialization: String
+    
+//    @Field(key: "photo")
+//    var photo: Data
     
     @Children(for: \.$owner)
     var skills: [Skill]

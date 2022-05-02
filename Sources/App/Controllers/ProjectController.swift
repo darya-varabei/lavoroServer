@@ -29,7 +29,7 @@ struct ProjectRepositoryImpl: ProjectRepository {
     }
 
     func list() async throws -> [Project] {
-        try await query().all()
+        try await query().with(\.$offers).all()
     }
 
     func get(_ id: Project.IDValue) async throws -> Project? {

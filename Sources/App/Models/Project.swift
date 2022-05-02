@@ -28,6 +28,12 @@ final class Project: Model, Content {
     @Field(key: "description")
     var description: String
     
+    @Field(key: "category")
+    var category: String
+    
+    @Field(key: "mode")
+    var mode: String
+    
     @Field(key: "photo")
     var photo: Data?
     

@@ -17,5 +17,5 @@ func routes(_ app: Application) throws {
     try app.register(collection: SkillController())
     try app.register(collection: TechnologyController())
     try app.register(collection: ResponseController())
-    
+    try app.register(collection: OfferController())
 }

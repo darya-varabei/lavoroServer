@@ -16,11 +16,20 @@ final class Offer: Model, Content {
     @ID(key: .id)
     var id: UUID?
     
-    @Parent(key: .id)
+    @Parent(key: "owner")
     var project: Project
     
     @Field(key: "name")
     var name: String
+    
+    @Field(key: "relocate")
+    var relocate: Bool
+    
+    @Field(key: "mode")
+    var mode: String
+    
+    @Field(key: "salary")
+    var salary: String
     
     @Field(key: "location")
     var location: String
@@ -33,11 +42,14 @@ final class Offer: Model, Content {
     
     required init() {}
     
-    init(id: UUID, name: String, location: String, description: String, technologies: [Technology]) {
+    init(id: UUID, name: String, location: String, description: String, technologies: [Technology], salary: String, mode: String, relocate: Bool) {
         self.id = id
         self.name = name
         self.location = location
         self.description = description
         self.technologies = technologies
+        self.salary = salary
+        self.mode = mode
+        self.relocate = relocate
     }
 }
