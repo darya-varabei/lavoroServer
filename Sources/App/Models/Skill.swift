@@ -15,7 +15,7 @@ final class Skill: Model, Content {
     @ID(key: .id)
     var id: UUID?
     
-    @Parent(key: .id)
+    @Parent(key: "owner")
     var owner: Employee
     
     @Field(key: "name")

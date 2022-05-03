@@ -73,3 +73,11 @@ extension User {
         return try app.jwt.signers.get(kid: .private)!.sign(MyJwtPayload(id: self.id, username: self.login, exp: exp))
     }
 }
+
+final class Identifier: Content {
+    var id: UUID
+    
+    init(id: UUID) {
+        self.id = id
+    }
+}

@@ -29,7 +29,7 @@ struct OfferRepositoryImpl: OfferRepository {
     }
 
     func list() async throws -> [Offer] {
-        try await query().all()
+        try await query().with(\.$technologies).all()
     }
 
     func get(_ id: Offer.IDValue) async throws -> Offer? {
